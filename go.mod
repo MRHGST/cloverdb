@@ -1,6 +1,6 @@
-module github.com/ostafen/clover/v2
+module github.com/MRHGST/cloverdb/v2
 
-go 1.13
+go 1.22
 
 require (
 	github.com/brianvoe/gofakeit/v6 v6.23.2
