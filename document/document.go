@@ -5,9 +5,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/MRHGST/cloverdb/v2/internal"
+	"github.com/MRHGST/cloverdb/v2/util"
 	"github.com/gofrs/uuid/v5"
-	"github.com/ostafen/clover/v2/internal"
-	"github.com/ostafen/clover/v2/util"
 )
 
 const (

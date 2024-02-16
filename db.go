@@ -7,13 +7,13 @@ import (
 	"fmt"
 	"sync/atomic"
 
+	d "github.com/MRHGST/cloverdb/v2/document"
+	"github.com/MRHGST/cloverdb/v2/index"
+	"github.com/MRHGST/cloverdb/v2/internal"
+	"github.com/MRHGST/cloverdb/v2/query"
+	"github.com/MRHGST/cloverdb/v2/store"
+	"github.com/MRHGST/cloverdb/v2/store/bbolt"
 	"github.com/gofrs/uuid/v5"
-	d "github.com/ostafen/clover/v2/document"
-	"github.com/ostafen/clover/v2/index"
-	"github.com/ostafen/clover/v2/internal"
-	"github.com/ostafen/clover/v2/query"
-	"github.com/ostafen/clover/v2/store"
-	"github.com/ostafen/clover/v2/store/bbolt"
 )
 
 // Collection creation errors

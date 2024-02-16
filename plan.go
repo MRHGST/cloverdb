@@ -3,11 +3,11 @@ package clover
 import (
 	"sort"
 
-	d "github.com/ostafen/clover/v2/document"
-	"github.com/ostafen/clover/v2/index"
-	"github.com/ostafen/clover/v2/internal"
-	"github.com/ostafen/clover/v2/query"
-	"github.com/ostafen/clover/v2/store"
+	d "github.com/MRHGST/cloverdb/v2/document"
+	"github.com/MRHGST/cloverdb/v2/index"
+	"github.com/MRHGST/cloverdb/v2/internal"
+	"github.com/MRHGST/cloverdb/v2/query"
+	"github.com/MRHGST/cloverdb/v2/store"
 )
 
 type planNode interface {

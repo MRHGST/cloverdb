@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 
+	c "github.com/MRHGST/cloverdb/v2"
+	badgerstore "github.com/MRHGST/cloverdb/v2/store/badger"
 	"github.com/dgraph-io/badger/v4"
-	c "github.com/ostafen/clover/v2"
-	badgerstore "github.com/ostafen/clover/v2/store/badger"
 )
 
 func main() {

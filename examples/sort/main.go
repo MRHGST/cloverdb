@@ -5,9 +5,9 @@ import (
 	"log"
 	"time"
 
-	c "github.com/ostafen/clover/v2"
-	d "github.com/ostafen/clover/v2/document"
-	"github.com/ostafen/clover/v2/query"
+	c "github.com/MRHGST/cloverdb/v2"
+	d "github.com/MRHGST/cloverdb/v2/document"
+	"github.com/MRHGST/cloverdb/v2/query"
 )
 
 func main() {

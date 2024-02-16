@@ -4,8 +4,8 @@ import (
 	"regexp"
 	"strings"
 
-	d "github.com/ostafen/clover/v2/document"
-	"github.com/ostafen/clover/v2/internal"
+	d "github.com/MRHGST/cloverdb/v2/document"
+	"github.com/MRHGST/cloverdb/v2/internal"
 )
 
 const (

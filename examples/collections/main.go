@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	c "github.com/ostafen/clover/v2"
+	c "github.com/MRHGST/cloverdb/v2"
 )
 
 func main() {

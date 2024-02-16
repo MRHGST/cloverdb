@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/MRHGST/cloverdb/v2/internal"
+	"github.com/MRHGST/cloverdb/v2/store"
 	"github.com/dgraph-io/badger/v4"
-	"github.com/ostafen/clover/v2/internal"
-	"github.com/ostafen/clover/v2/store"
 )
 
 type RangeIndex interface {

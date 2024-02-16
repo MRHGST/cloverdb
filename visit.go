@@ -1,10 +1,10 @@
 package clover
 
 import (
-	"github.com/ostafen/clover/v2/index"
-	"github.com/ostafen/clover/v2/internal"
-	"github.com/ostafen/clover/v2/query"
-	"github.com/ostafen/clover/v2/util"
+	"github.com/MRHGST/cloverdb/v2/index"
+	"github.com/MRHGST/cloverdb/v2/internal"
+	"github.com/MRHGST/cloverdb/v2/query"
+	"github.com/MRHGST/cloverdb/v2/util"
 )
 
 type NotFlattenVisitor struct {

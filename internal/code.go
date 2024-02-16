@@ -3,8 +3,8 @@ package internal
 import (
 	"time"
 
+	"github.com/MRHGST/cloverdb/v2/util"
 	"github.com/google/orderedcode"
-	"github.com/ostafen/clover/v2/util"
 )
 
 func getEncodeValue(value interface{}) interface{} {

@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"os"
 
-	d "github.com/ostafen/clover/v2/document"
-	"github.com/ostafen/clover/v2/query"
+	d "github.com/MRHGST/cloverdb/v2/document"
+	"github.com/MRHGST/cloverdb/v2/query"
 )
 
 // ExportCollection exports an existing collection to a JSON file.
