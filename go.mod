@@ -7,7 +7,7 @@ require (
 	github.com/dgraph-io/badger/v4 v4.2.0
 	github.com/gofrs/uuid/v5 v5.0.0
 	github.com/google/orderedcode v0.0.1
-	github.com/ostafen/clover/v2 v2.0.0-alpha.3
+	github.com/MRHGST/cloverdb/v2 v2.0.0-alpha.3-fix
 	github.com/stretchr/testify v1.8.4
 	github.com/vmihailenco/msgpack/v5 v5.3.5
 	go.etcd.io/bbolt v1.3.7
