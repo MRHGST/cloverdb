@@ -31,9 +31,11 @@
 **CloverDB** abstrae la forma en que las colecciones se almacenan en el disco mediante la interfaz **StorageEngine**. La implementación por defecto está basada en almacenamiento de tipo clave-valor de la base de datos [Badger](https://github.com/dgraph-io/badger).
 
 ## Instalación
-Asegúrate de que tienes un entorno Go funcional (Se requiere Go 1.13 o superior). 
+
+Asegúrate de que tienes un entorno Go funcional (Se requiere Go 1.13 o superior).
+
 ```shell
-  GO111MODULE=on go get github.com/ostafen/clover
+  GO111MODULE=on go get github.com/MRHGST/cloverdb
 ```
 
 ## Bases de datos y colecciones
@@ -47,7 +49,7 @@ Para guardar documentos dentro de colecciones, deberás de abrir una base de dat
 ```go
 import (
 	"log"
-	c "github.com/ostafen/clover"
+	c "github.com/MRHGST/cloverdb"
 )
 
 ...
@@ -62,7 +64,7 @@ defer db.Close() // recuerda cerrar la base de datos cuando hayas acabado
 
 ### Colecciones
 
-CloverDB guarda los documentos dentro de colecciones. Las colecciones de bases de datos sin esquema son el equivalente a las tablas en bases de datos relacionales. Una colección se crea llamando a la función `CreateCollection()` en una instancia de la base de datos. Los nuevos documentos pueden ser insertados utilizando los métodos `Insert()` o `InsertOne()`. Cada documento se identifica de forma única por una **Version 4 UUID** guardada en el campo especial **_id** y generado durante la inserción.
+CloverDB guarda los documentos dentro de colecciones. Las colecciones de bases de datos sin esquema son el equivalente a las tablas en bases de datos relacionales. Una colección se crea llamando a la función `CreateCollection()` en una instancia de la base de datos. Los nuevos documentos pueden ser insertados utilizando los métodos `Insert()` o `InsertOne()`. Cada documento se identifica de forma única por una **Version 4 UUID** guardada en el campo especial **\_id** y generado durante la inserción.
 
 ```go
 db, _ := c.Open("clover-db")
@@ -120,7 +122,6 @@ for _, doc := range docs {
 }
 ```
 
-
 ### Filtrar Documentos
 
 Para filtrar los documentos devueltos por `FindAll()`, deberás de especificar ciertos parámetros determinados por el objeto **Criteria** utilizando el método `Where()`. Un objeto **Criteria** simplemente representa una afirmación en un documento, evaluándose como verdadero (true) solo si coinciden todas las condiciones expuestas en la consulta.
@@ -141,7 +142,7 @@ Con el objetivo de construir consultas más complejas, encadenaremos diferentes 
 db.FindAll(c.NewQuery("todos").Where(c.Field("completed").Eq(true).And(c.Field("userId").In(5, 8))))
 ```
 
-Naturalmente,  también podrás crear un objeto **Criteria** que implique múltiples campos. CloverDB te proporciona dos formas equivalentes de lograr esto:
+Naturalmente, también podrás crear un objeto **Criteria** que implique múltiples campos. CloverDB te proporciona dos formas equivalentes de lograr esto:
 
 ```go
 db.FindAll(c.NewQuery("myCollection").Where(c.Field("myField1").Gt(c.Field("myField2"))))
@@ -153,7 +154,7 @@ db.FindAll(c.NewQuery("myCollection").Where(c.Field("myField1").Gt("$myField2"))
 ### Ordenar Documentos
 
 Para ordenar documentos en CloverDB, necesitarás usar `Sort()`. Es una función variable que acepta una secuencia de SortOption, cada cual permitirá especificar un campo y una dirección de ordenamiento.
-La dirección de ordenamiento puede ser 1 o -1, respectivamente corresponden a orden ascendente y descendente. Si no se proporciona ninguna SortOption, `Sort()` utilizará el campo **_id** por defecto.
+La dirección de ordenamiento puede ser 1 o -1, respectivamente corresponden a orden ascendente y descendente. Si no se proporciona ninguna SortOption, `Sort()` utilizará el campo **\_id** por defecto.
 
 ```go
 // Encontrar cualquier "por hacer" (todo) perteneciente al usuario insertado más reciente
@@ -169,6 +170,7 @@ En ocasiones, puede ser útil eliminar ciertos documentos del resultado o simple
 // y además limitar el número máximo de resultados de la consulta a 100
 db.FindAll(c.NewQuery("todos").Skip(10).Limit(100))
 ```
+
 ### Actualizar/Eliminar Documentos
 
 El método `Update()` es utilizado para modificar campos específicos de documentos en una colección. El método `Delete()` se utiliza para eliminar documentos. Ambos métodos pertenecen al objeto Query, de modo que sea fácil actualizar y eliminar documentos que coincidan con una consulta determinada.
@@ -195,6 +197,7 @@ db.DeleteById("todos", docId)
 ```
 
 ## Índices
+
 En CloverDB, los índices apoyan la ejecución eficiente de consultas. Sin índices, una colección debe ser escaneada por completo para seleccionar aquellos documentos que coincidan con una determinada consulta. Un índice es una estructura especial de datos que guarda los valores (o grupo de valores) de un campo específico de un documento, ordenado por el valor del propio campo. Esto significa que los índices pueden ser utilizados para ayudar a realizar consultas eficientes de coincidencias de igualdad y consultas basadas en rangos. Además, cuando los documentos son iterados a través de un índice, los resultados se devolverán ya ordenados sin necesidad de ejecutar ningún paso de ordenación adicional.
 Sin embargo deberás de tener en cuenta que el uso de índices no sale gratis por completo. Además de incrementar el uso del disco, los índices requieren tiempo de CPU adicional durante las operaciones de inserción y actualización/borrado. Además, cuando se accede a un documento a través de un índice, se ejecutarán dos lecturas de disco ya que el índice únicamente guarda la referencia de la id del documento real. Como consecuencia, el aumento de velocidad solo se notará cuando los criterios especificados son usados para acceder a un grupo restringido de documentos.
 
@@ -230,7 +233,7 @@ fmt.Println(doc.Get("myField").(uint64))
 
 En los valores de los punteros se eliminarán las referencias hasta que se encuentre un **nil** o un valor **non-pointer**:
 
-``` go
+```go
 var x int = 10
 var ptr *int = &x
 var ptr1 **int = &ptr

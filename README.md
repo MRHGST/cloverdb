@@ -32,11 +32,12 @@ For such scenarios, **CloverDB** may be a more suitable alternative.
 
 Previously, **CloverDB** relied on the [Badger](https://github.com/dgraph-io/badger) key-value store as a storage layer. However, **Badger** is not suitable for every scenario (for example, when the database size is a constraint). This is why, the storage layer of **CloverDB** has been abstracted through a set of interface types to work with any key-value store. At the moment, **CloverDB** can work with both **Badger** and [Bolt](https://github.com/etcd-io/bbolt) (by default **Bolt** is used).
 
-
 ## Installation
-Make sure you have a working Go environment (Go 1.18 or higher is required). 
+
+Make sure you have a working Go environment (Go 1.18 or higher is required).
+
 ```shell
-  GO111MODULE=on go get github.com/ostafen/clover/v2
+  GO111MODULE=on go get github.com/MRHGST/cloverdb/v2
 ```
 
 ## Databases and Collections
@@ -52,7 +53,7 @@ import (
   "log"
   "github.com/dgraph-io/badger/v4"
   c "github.com/ostafen/clover"
-  badgerstore "github.com/ostafen/clover/v2/store/badger"
+  badgerstore "github.com/MRHGST/cloverdb/v2/store/badger"
 )
 
 ...
@@ -69,7 +70,7 @@ defer db.Close() // remember to close the db when you have done
 
 ### Collections
 
-CloverDB stores documents inside collections. Collections are the **schemaless** equivalent of tables in relational databases. A collection is created by calling the `CreateCollection()` function on a database instance. New documents can be inserted using the `Insert()` or `InsertOne()` methods. Each document is uniquely identified by a **Version 4 UUID** stored in the **_id** special field and generated during insertion.
+CloverDB stores documents inside collections. Collections are the **schemaless** equivalent of tables in relational databases. A collection is created by calling the `CreateCollection()` function on a database instance. New documents can be inserted using the `Insert()` or `InsertOne()` methods. Each document is uniquely identified by a **Version 4 UUID** stored in the **\_id** special field and generated during insertion.
 
 ```go
 db, _ := c.Open("clover-db")
@@ -129,8 +130,7 @@ for _, doc := range docs {
 
 ### Filter Documents with Criteria
 
-In order to filter the documents returned by `FindAll()`, you have to specify a query Criteria using the `Where()` method. A Criteria object simply represents a predicate on a document, evaluating to **true** only if the document satisfies all the query conditions. 
-
+In order to filter the documents returned by `FindAll()`, you have to specify a query Criteria using the `Where()` method. A Criteria object simply represents a predicate on a document, evaluating to **true** only if the document satisfies all the query conditions.
 
 The following example shows how to build a simple Criteria, matching all the documents having the **completed** field equal to true.
 
@@ -159,7 +159,7 @@ db.FindAll(c.NewQuery("myCollection").Where(c.Field("myField1").Gt("$myField2"))
 ### Sorting Documents
 
 To sort documents in CloverDB, you need to use `Sort()`. It is a variadic function which accepts a sequence of SortOption, each allowing to specify a field and a sorting direction.
-A sorting direction can be one of 1 or -1, respectively corresponding to ascending and descending order. If no SortOption is provided, `Sort()` uses the **_id** field by default.
+A sorting direction can be one of 1 or -1, respectively corresponding to ascending and descending order. If no SortOption is provided, `Sort()` uses the **\_id** field by default.
 
 ```go
 // Find any todo belonging to the most recent inserted user
@@ -203,7 +203,7 @@ db.DeleteById("todos", docId)
 
 ## Indexes
 
-In CloverDB, indexes support the efficient execution of queries. Without indexes, a collection must be fully scanned to select those documents matching a given query. An index is a special data structure storing the values of a specific document field (or set of fields), sorted by the value of the field itself. This means that they can be exploited to supports efficient equality matches and range-based queries. 
+In CloverDB, indexes support the efficient execution of queries. Without indexes, a collection must be fully scanned to select those documents matching a given query. An index is a special data structure storing the values of a specific document field (or set of fields), sorted by the value of the field itself. This means that they can be exploited to supports efficient equality matches and range-based queries.
 Moreover, when documents are iterated through an index, results can be returned in sorted order without performing any additional sorting step.
 Note however that using indexes is not completely for free. Apart from increasing disk space, indexes require additional cpu-time during each insert and update/delete operation. Moreover, when accessing a document through an index, two disk reads must be performed, since indexes only store a reference (the document id) to the actual document. As a consequence, the speed-up is sensitive only when the specified criteria is used to access a restricted set of documents.
 
@@ -239,7 +239,7 @@ fmt.Println(doc.Get("myField").(uint64))
 
 Pointer values are dereferenced until either **nil** or a **non-pointer** value is found:
 
-``` go
+```go
 var x int = 10
 var ptr *int = &x
 var ptr1 **int = &ptr
@@ -277,4 +277,3 @@ Contributions and suggestions have been gratefully received from the following u
 </a>
 
 Made with [contrib.rocks](https://contrib.rocks).
-

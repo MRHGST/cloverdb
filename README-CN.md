@@ -11,18 +11,18 @@
 [![codecov](https://codecov.io/gh/ostafen/clover/branch/main/graph/badge.svg?token=R06H8FR47O)](https://codecov.io/gh/ostafen/clover)
 [![Join the chat at https://gitter.im/cloverDB/community](https://badges.gitter.im/cloverDB/community.svg)](https://gitter.im/cloverDB/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-> [🇬🇧 English](README.md) | 🇨🇳 简体中文 | [🇪🇸 Spanish](README-ES.md) 
+> [🇬🇧 English](README.md) | 🇨🇳 简体中文 | [🇪🇸 Spanish](README-ES.md)
 
-**CloverDB** 是一个轻量级的NoSQL数据库，由于它的代码库很小，所以设计得简单且易于维护。它的灵感来自 [tinyDB](https://github.com/msiemens/tinydb).
+**CloverDB** 是一个轻量级的 NoSQL 数据库，由于它的代码库很小，所以设计得简单且易于维护。它的灵感来自 [tinyDB](https://github.com/msiemens/tinydb).
 
 ## 特点
 
 - 面向文档
-- 原生Golang编写
-- 简单直观的api
+- 原生 Golang 编写
+- 简单直观的 api
 - 容易维护
 
-## 为什么选择CloverDB?
+## 为什么选择 CloverDB?
 
 编写**CloverDB**是为了使其易于维护。因此，它以简单性换取性能，并不是为了替代性能更好的数据库，如**MongoDB**或**MySQL**。然而，在有些项目中，运行单独的数据库服务器可能会导致过度消耗，并且，对于简单的查询，网络延迟可能是主要的性能瓶颈。对于这个场景，**cloverDB**可能是一个更合适的替代方案。
 
@@ -32,21 +32,26 @@
 ，您可以轻松地编写自己的存储引擎实现。
 
 ## 安装
-确保你拥有Go运行环境 (需要Go 1.13 或者更高版本)
+
+确保你拥有 Go 运行环境 (需要 Go 1.13 或者更高版本)
+
 ```shell
-  GO111MODULE=on go get github.com/ostafen/clover
+  GO111MODULE=on go get github.com/MRHGST/cloverdb
 ```
 
 ## 数据库和集合
-CloverDB将数据记录存储为JSON“文档”，这些“文档“被分组在集合中。数据库由一个或多个集合组成。
+
+CloverDB 将数据记录存储为 JSON“文档”，这些“文档“被分组在集合中。数据库由一个或多个集合组成。
 以下简称“文档”为文档
 
 ### 数据库
-要在集合中存储文档，必须使用open()函数打开Clover数据库。 
+
+要在集合中存储文档，必须使用 open()函数打开 Clover 数据库。
+
 ```go
 import (
 	"log"
-	c "github.com/ostafen/clover"
+	c "github.com/MRHGST/cloverdb"
 )
 
 ...
@@ -60,7 +65,8 @@ defer db.Close() // 记住当你完成时关闭数据库
 ```
 
 ### 集合
-CloverDB将文档存储在集合中。集合是关系数据库中的表的无模式对等物。集合是通过调用数据库实例上的CreateCollection()函数创建的。可以使用Insert()或InsertOne()方法插入新文档。每个文档都由存储在id特殊字段中的Version 4 UUID唯一标识，并在插入期间生成。
+
+CloverDB 将文档存储在集合中。集合是关系数据库中的表的无模式对等物。集合是通过调用数据库实例上的 CreateCollection()函数创建的。可以使用 Insert()或 InsertOne()方法插入新文档。每个文档都由存储在 id 特殊字段中的 Version 4 UUID 唯一标识，并在插入期间生成。
 
 ```go
 
@@ -76,8 +82,11 @@ docId, _ := db.InsertOne("myCollection", doc)
 fmt.Println(docId)
 
 ```
+
 ### 引入与导出集合
-CloverDB能够轻松地将集合导入和导出为JSON格式，而不管使用的是哪种存储引擎。
+
+CloverDB 能够轻松地将集合导入和导出为 JSON 格式，而不管使用的是哪种存储引擎。
+
 ```go
 // 将"todos"集合的内容转储到"todos.json"文件
 db.ExportCollection("todos", "todos.json")
@@ -95,13 +104,14 @@ for _, doc := range docs {
 
 ```
 
-
 ## 请求
-CloverDB配备了流利而优雅的API来查询您的数据。查询由查询对象表示，该对象允许检索与给定标准匹配的文档。可以通过将有效的集合名称传递给query()方法来创建查询。
 
+CloverDB 配备了流利而优雅的 API 来查询您的数据。查询由查询对象表示，该对象允许检索与给定标准匹配的文档。可以通过将有效的集合名称传递给 query()方法来创建查询。
 
 ### 选择集合中的所有文档
+
 FindAll()方法用于检索满足给定查询的所有文档。
+
 ```go
 docs, _ := db.Query("myCollection").FindAll()
 
@@ -116,10 +126,12 @@ for _, doc := range docs {
     log.Println(todo)
 }
 ```
-### 筛选器文档与标准
-为了过滤FindAll()返回的文档，必须使用Where()方法指定查询标准。标准对象只是表示文档上的谓词，只有当文档满足所有查询条件时才计算为true。
 
-下面的示例展示了如何构建一个简单的标准，以匹配所有completed字段等于true的文档。
+### 筛选器文档与标准
+
+为了过滤 FindAll()返回的文档，必须使用 Where()方法指定查询标准。标准对象只是表示文档上的谓词，只有当文档满足所有查询条件时才计算为 true。
+
+下面的示例展示了如何构建一个简单的标准，以匹配所有 completed 字段等于 true 的文档。
 
 ```go
 db.Query("todos").Where(c.Field("completed").Eq(true)).FindAll()
@@ -128,30 +140,36 @@ db.Query("todos").Where(c.Field("completed").Eq(true)).FindAll()
 db.Query("todos").Where(c.Field("completed").IsTrue()).FindAll()
 ```
 
-为了构建非常复杂的查询，我们使用And()和Or()方法链接多个标准对象，每个对象返回一个通过应用相应的逻辑运算符获得的新标准。
+为了构建非常复杂的查询，我们使用 And()和 Or()方法链接多个标准对象，每个对象返回一个通过应用相应的逻辑运算符获得的新标准。
+
 ```go
 //查找id为5和8的用户的所有已完成的待办事项
 db.Query("todos").Where(c.Field("completed").Eq(true).And(c.Field("userId").In(5, 8))).FindAll()
 ```
 
 ### 排序文档
-要对CloverDB中的文档进行排序，您需要使用sort()。它是一个可变函数，接受SortOption序列，每个序列允许指定一个字段和一个排序方向。排序方向可以为1或-1，分别对应升序和降序。如果没有提供SortOption, Sort()默认使用id字段。
+
+要对 CloverDB 中的文档进行排序，您需要使用 sort()。它是一个可变函数，接受 SortOption 序列，每个序列允许指定一个字段和一个排序方向。排序方向可以为 1 或-1，分别对应升序和降序。如果没有提供 SortOption, Sort()默认使用 id 字段。
 
 ```go
 // 找到属于最近插入的用户的任何待办事项
 db.Query("todos").Sort(c.SortOption{"userId", -1}).FindFirst()
 ```
+
 ### 跳过/限制文档
-有时，从输出中跳过一些文档，或者简单地设置查询返回结果的最大数量可能很有用。为此，CloverDB提供了Skip()和Limit()函数，它们都接受整数$n$作为参数。
+
+有时，从输出中跳过一些文档，或者简单地设置查询返回结果的最大数量可能很有用。为此，CloverDB 提供了 Skip()和 Limit()函数，它们都接受整数$n$作为参数。
+
 ```go
 // 丢弃输出中的前10个文档
 // 还将查询结果的最大数量限制为100个
 db.Query("todos").Skip(10).Limit(100).FindAll()
 ```
 
-
 ### 更新和删除文档
+
 Update()方法用于修改集合中文档的特定字段。delete()方法用于删除文档。两种方法都属于查询对象，因此易于更新和删除与特定查询匹配的文档。
+
 ```go
 // 将id为1的用户的所有待办事项标记为已完成
 updates := make(map[string]interface{})
@@ -163,7 +181,7 @@ db.Query("todos").Where(c.Field("userId").Eq(1)).Update(updates)
 db.Query("todos").Where(c.Field("userId").In(5,8)).Delete()
 ```
 
-要使用特定的文档id更新或删除单个文档，请分别使用UpdateById()或DeleteById(),
+要使用特定的文档 id 更新或删除单个文档，请分别使用 UpdateById()或 DeleteById(),
 顺序为:
 
 ```go
@@ -174,12 +192,11 @@ db.Query("todos").UpdateById(docId, map[string]interface{}{"completed": true})
 db.Query("todos").DeleteById(docId)
 ```
 
-
 ## 数据类型
-CloverDB内部支持以下原始数据类型：**int64**、**uint64**、**flat64**、**string**、**bool** 和 **time.Time**。CloverDB会尝试对非内部类型进行转化：有符号整数值被转换为int64、而无符号整数值被转换为uint64、Float32值扩展为Float64。
 
+CloverDB 内部支持以下原始数据类型：**int64**、**uint64**、**flat64**、**string**、**bool** 和 **time.Time**。CloverDB 会尝试对非内部类型进行转化：有符号整数值被转换为 int64、而无符号整数值被转换为 uint64、Float32 值扩展为 Float64。
 
-例如，以下代码中的`uint8`类型的值会被CloverDB自动转化：
+例如，以下代码中的`uint8`类型的值会被 CloverDB 自动转化：
 
 ```go
 doc := c.NewDocument()
@@ -190,13 +207,13 @@ fmt.Println(doc.Get("myField").(uint64))
 
 关于指针，将会自动迭代引用，直到迭代出空指针`nil`，或者非指针类型停止：
 
-``` go
+```go
 var x int = 10
 var ptr *int = &x
 var ptr1 **int = &ptr
 
 doc.Set("ptr", ptr) // ptr自动迭代指针引用，存入的值为10，下面同理
-doc.Set("ptr1", ptr1) 
+doc.Set("ptr1", ptr1)
 
 fmt.Println(doc.Get("ptr").(int64) == 10) // 比较结果为 true
 fmt.Println(doc.Get("ptr1").(int64) == 10)
